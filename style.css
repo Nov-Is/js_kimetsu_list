@@ -1,0 +1,30 @@
+.character-image {
+  width: 200px;
+  height: 200px;
+}
+
+p { 
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+.loading {
+    /* 画面最大 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    /* 背景色（黒、不透明度80%） */
+    background-color: #000000;
+    opacity: 0.8;
+    /* フレックスコンテナ（縦並べ、横中央、縦中央） */
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* 表示を一番上 */
+    z-index: 999;
+    /* 選択付加 */
+    user-select: none;
+}
