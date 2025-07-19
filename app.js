@@ -8,12 +8,11 @@ export function createApp() {
     this.categoryHandlers();
   }
 
-  app.renderCharacters = function(json, category) {
+  app.renderCharacters = function(json) {
     const rowElement = document.querySelector(".row");
     rowElement.innerHTML = "";
 
-    const filterData = fetchCharacters(json, category);
-    filterData.forEach(data => {
+    json.forEach(data => {
       const characterInstance = new Character(data);
       const characterElement = characterInstance.toHtmlElement();
       rowElement.appendChild(characterElement);
@@ -25,12 +24,7 @@ export function createApp() {
     for(let element of buttonElements) {
       element.addEventListener("change", async (event) => {
         const selectedCategory = event.target.value;
-
-        if(selectedCategory !== "all") {
-          await this.fetchAndRenderCategory(categoryLabels[selectedCategory]);
-        } else {
-          await this.fetchAndRenderCategory("all");
-        }
+        await this.fetchAndRenderCategory(selectedCategory);
       })
     }
   }
@@ -42,12 +36,13 @@ export function createApp() {
     rowElement.innerHTML = "";
 
     try {
-      const response = await fetch("https://ihatov08.github.io/kimetsu_api/api/all.json");
+      const baseApi = "https://ihatov08.github.io/kimetsu_api/"
+      const apiEndpoint = category === "all" ? "api/all.json" : `api/${category}.json`
+      const response = await fetch(baseApi + apiEndpoint);
       const json = await response.json();
 
       await new Promise(resolve => setTimeout(resolve, 200)); //ローディング画面を意図的に表示
 
-      this.characters = json;
       this.renderCharacters(json, category);
     } catch (error) {
       console.error("エラーが発生しました: ", error);
@@ -58,14 +53,4 @@ export function createApp() {
     }
   }
   return app;
-}
-
-function fetchCharacters(json, category) {
-  if(category !== "all"){
-    // all以外のときにfilterで絞る
-    json = json.filter(char => {
-      return char.category === category;
-    })
-  }
-  return json;
 }
