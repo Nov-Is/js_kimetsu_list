@@ -1,4 +1,4 @@
-import { Character, categoryLabels } from "./character.js";
+import { Character } from "./character.js";
 
 export function createApp() {
   const app = {};
@@ -36,9 +36,8 @@ export function createApp() {
     rowElement.innerHTML = "";
 
     try {
-      const baseApi = "https://ihatov08.github.io/kimetsu_api/"
-      const apiEndpoint = category === "all" ? "api/all.json" : `api/${category}.json`
-      const response = await fetch(baseApi + apiEndpoint);
+      const apiEndpoint = `https://ihatov08.github.io/kimetsu_api/api/${category}.json`
+      const response = await fetch(apiEndpoint);
       const json = await response.json();
 
       await new Promise(resolve => setTimeout(resolve, 200)); //ローディング画面を意図的に表示

@@ -22,9 +22,3 @@ export class Character {
     return column;
   }
 }
-
-export const categoryLabels = {
-  kisatsutai: "鬼殺隊",
-  hashira: "柱",
-  oni: "鬼"
-}
